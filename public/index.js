@@ -194,6 +194,9 @@ for(var i = 0; i < rentals.length;i++)
 				else
 					rentals[i].price = rentals[i].price - 0.1*rentals[i].price;
 			}
+			rentals[i].commission.insurance = rentals[i].price/2;
+			rentals[i].commission.assistance = ((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1;
+			rentals[i].commission.drivy = rentals[i].price - rentals[i].commission.insurance - rentals[i].commission.assistance;
 		}
 	}
 }
