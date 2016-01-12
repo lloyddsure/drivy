@@ -175,11 +175,12 @@ for(var i = 0; i < rentals.length;i++)
 	var distance
 	for(var j = 0; j<cars.length;j++)
 	{
-		if(rentals[i].carId == cars[j].id)
+		if(rentals[i].carId == cars[j].id) //find the car of the rentals
 		{
-			distance = cars[j].pricePerKm * rentals[i].distance;
-			time = cars[j].pricePerDay*(((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1);
+			distance = cars[j].pricePerKm * rentals[i].distance; // price for distance
+			time = cars[j].pricePerDay*(((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1); //price for time
 			rentals[i].price = distance+time;
+			//Exercie 2
 			if((new Date(rentals[i].pickupDate)-new Date(rentals[i].returnDate))/86400000>1)
 			{
 				if((new Date(rentals[i].pickupDate)-new Date(rentals[i].returnDate))/86400000>4)
@@ -194,14 +195,17 @@ for(var i = 0; i < rentals.length;i++)
 				else
 					rentals[i].price = rentals[i].price - 0.1*rentals[i].price;
 			}
+			//Exercice 3
 			rentals[i].commission.insurance = rentals[i].price/2;
 			rentals[i].commission.assistance = ((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1;
 			rentals[i].commission.drivy = rentals[i].price - rentals[i].commission.insurance - rentals[i].commission.assistance;
+			//Exercice 4
+			if(rentals[i].options.deductibleReduction)
+				rentals[i].price = 4*(((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1);
 		}
 	}
 }
 
-//Exercice 2
 
 
 console.log(cars);
