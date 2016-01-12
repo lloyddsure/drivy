@@ -185,13 +185,15 @@ for(var i = 0; i < rentals.length;i++)
 				if((new Date(rentals[i].pickupDate)-new Date(rentals[i].returnDate))/86400000>4)
 				{
 					if((new Date(rentals[i].pickupDate)-new Date(rentals[i].returnDate))/86400000>10)
+					{
 						rentals[i].price = rentals[i].price/2;
+					}
+					else
+						rentals[i].price = rentals[i].price - 0.3*rentals[i].price;
 				}
 				else
-					rentals[i].price = rentals[i].price - 0.3*rentals[i].price;
+					rentals[i].price = rentals[i].price - 0.1*rentals[i].price;
 			}
-			else
-				rentals[i].price = rentals[i].price - 0.1*rentals[i].price;
 		}
 	}
 }
