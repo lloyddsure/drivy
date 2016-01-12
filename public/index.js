@@ -165,6 +165,24 @@ var rentalModifications = [{
   'pickupDate': '2015-12-05'
 }];
 
+
+//Exercice 1
+
+
+for(var i = 0; i < rentals.length;i++)
+{
+	var time;
+	var distance
+	for(var j = 0; j<cars.length;j++)
+	{
+		if(rentals[i].carId == cars[j].id)
+		{
+			distance = cars[j].pricePerDay * rentals[i].distance;
+			time = cars[j].pricePerDay*((new Date(rentals[i].pickupDate)-new Date(rentals[i].returnDate))/86400000+1);
+			rentals[i].price = distance+time;
+		}
+	}
+}
 console.log(cars);
 console.log(rentals);
 console.log(actors);
