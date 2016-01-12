@@ -201,7 +201,30 @@ for(var i = 0; i < rentals.length;i++)
 			rentals[i].commission.drivy = rentals[i].price - rentals[i].commission.insurance - rentals[i].commission.assistance;
 			//Exercice 4
 			if(rentals[i].options.deductibleReduction)
-				rentals[i].price = 4*(((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1);
+			{
+				rentals[i].price = rentals[i].price+4*(((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1);
+				rentals[i].commission.drivy = rentals[i].commission.drivy+4*(((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1);
+			}
+		}
+	}
+	//Exercice5
+	for(var j=0;j<actors.length;j++)
+	{
+		if(rentals[i].id==actors[j].rentalId)
+		{
+			for(var x=0;x<actors[j].payment.length;x++)
+			{
+				if(actors[j].payment[x].who=="driver")
+					actors[j].payment[x].amount = rentals[i].price;
+				if(actors[j].payment[x].who=="owner")
+					actors[j].payment[x].amount = rentals[i].price - rentals[i].commission.insurance - rentals[i].commission.assistance - rentals[i].commission.drivy;
+				if(actors[j].payment[x].who=="insurance")
+					actors[j].payment[x].amount = rentals[i].commission.insurance;
+				if(actors[j].payment[x].who=="assistance")
+					actors[j].payment[x].amount = rentals[i].commission.assistance;
+				if(actors[j].payment[x].who=="drivy")
+					actors[j].payment[x].amount = rentals[i].commission.drivy;
+			}
 		}
 	}
 }
