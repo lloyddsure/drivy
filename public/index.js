@@ -166,8 +166,28 @@ var rentalModifications = [{
 }];
 
 
-//Exercice 1
+//Exercice 6
 
+for(var i=0;i<rentalModifications.length;i++)
+{
+	for(var j=0;j<rentals.length;j++)
+	{
+		if(rentalModifications[i].rentalId == rentals[j].id)
+		{
+			if(typeof rentalModifications[i].returnDate != "undefined")
+				rentals[j].returnDate = rentalModifications[i].returnDate;
+			if(typeof rentalModifications[i].pickupDate != "undefined")
+				rentals[j].pickupDate = rentalModifications[i].pickupDate;
+			if(typeof rentalModifications[i].distance != "undefined")
+				rentals[j].distance = rentalModifications[i].distance;
+		}
+	}
+}
+
+
+
+
+//Exercice 1
 
 for(var i = 0; i < rentals.length;i++)
 {
@@ -178,22 +198,31 @@ for(var i = 0; i < rentals.length;i++)
 		if(rentals[i].carId == cars[j].id) //find the car of the rentals
 		{
 			distance = cars[j].pricePerKm * rentals[i].distance; // price for distance
-			time = cars[j].pricePerDay*(((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000)+1); //price for time
+			var date = (new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000;
+			time = cars[j].pricePerDay*(date+1); //price for time
 			rentals[i].price = distance+time;
 			//Exercie 2
-			if((new Date(rentals[i].pickupDate)-new Date(rentals[i].returnDate))/86400000>1)
+			rentals[i].price = distance+cars[j].pricePerDay;
+			var rest_of_time = date;
+			if(date>1)
 			{
-				if((new Date(rentals[i].pickupDate)-new Date(rentals[i].returnDate))/86400000>4)
+				for(var y = 1; y<4&&rest_of_time>0;y++)
 				{
-					if((new Date(rentals[i].pickupDate)-new Date(rentals[i].returnDate))/86400000>10)
-					{
-						rentals[i].price = rentals[i].price/2;
-					}
-					else
-						rentals[i].price = rentals[i].price - 0.3*rentals[i].price;
+					rentals[i].price += cars[j].pricePerDay*0.9;
+					rest_of_time--;
 				}
-				else
-					rentals[i].price = rentals[i].price - 0.1*rentals[i].price;
+				if(date>4)
+				{
+					for(var y = 4; y<10&&rest_of_time>0;y++)
+					{
+						rentals[i].price += cars[j].pricePerDay*0.7;
+						rest_of_time--;
+					}
+					if(date>10)
+					{
+						rentals[i].price += rest_of_time*cars[j].pricePerDay/2;
+					}
+				}
 			}
 			//Exercice 3
 			rentals[i].commission.insurance = rentals[i].price/2;
